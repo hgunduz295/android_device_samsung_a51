@@ -32,16 +32,16 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/gsi_keys.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
 
 # Device identifier. This must come after all inclusions
-PRODUCT_DEVICE := a51
-PRODUCT_NAME := lineage_a51
 PRODUCT_BRAND := samsung
-PRODUCT_MODEL := SM-A515F
+PRODUCT_DEVICE := a50dd
 PRODUCT_MANUFACTURER := samsung
+PRODUCT_NAME := lineage_a50dd
+PRODUCT_MODEL := SM-A505
 
 PRODUCT_GMS_CLIENTID_BASE := android-samsung
 
-BUILD_FINGERPRINT := samsung/a51nsxx/a51:10/QP1A.190711.020/A515FXXU3BTF4:user/release-keys
+BUILD_FINGERPRINT := samsung/a50xx/a50:9/PPR1.180610.011/A505FNXXS3ASL1:user/release-keys
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
-        PRODUCT_NAME=a51nsxx \
-        PRIVATE_BUILD_DESC="a51nsxx-user 10 QP1A.190711.020 A515FXXU3BTF4 release-keys"
+        PRODUCT_NAME=a50dd \
+     PRODUCT_BUILD_PROP_OVERRIDES += PRIVATE_BUILD_DESC="a50xx-user 9 PPR1.180610.011 A505FNXXS3ASL1 release-keys"
