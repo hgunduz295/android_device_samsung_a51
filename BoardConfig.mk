@@ -1,68 +1,89 @@
 #
-# Copyright (C) 2018 The LineageOS Project
+# Copyright (C) 2018-2019 The LineageOS Project
 #
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#      http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+# SPDX-License-Identifier: Apache-2.0
 #
 
-DEVICE_PATH := device/samsung/a51
+DEVICE_PATH := device/samsung/a50dd
+BOARD_VENDOR := samsung
 
-# APEX image
-DEXPREOPT_GENERATE_APEX_IMAGE := true
+# Architecture
+TARGET_ARCH := arm64
+TARGET_ARCH_VARIANT := armv8-a
+TARGET_CPU_ABI := arm64-v8a
+TARGET_CPU_ABI2 :=
+TARGET_CPU_VARIANT := cortex-a53
 
-# Assert
-TARGET_OTA_ASSERT_DEVICE := a51nsxx,a51xx,a51
+TARGET_2ND_ARCH := arm
+TARGET_2ND_ARCH_VARIANT := armv8-a
+TARGET_2ND_CPU_ABI := armeabi-v7a
+TARGET_2ND_CPU_ABI2 := armeabi
+TARGET_2ND_CPU_VARIANT := cortex-a53
+TARGET_USES_64_BIT_BINDER := true
 
-# Display
-TARGET_ADDITIONAL_GRALLOC_10_USAGE_BITS := 0x2000U | 0x400000000LL
-
-# FOD
-TARGET_SURFACEFLINGER_FOD_LIB := //$(DEVICE_PATH):libfod_extension.a51
-
-# Display
-TARGET_SCREEN_DENSITY := 420
+# Bootloader
+TARGET_BOOTLOADER_BOARD_NAME := universal9610
+TARGET_NO_BOOTLOADER := true 
 
 # Kernel
-BOARD_BOOT_HEADER_NAME       := SRPSG30B003KU
-TARGET_KERNEL_CONFIG := exynos9610-a51xx_defconfig
-BOARD_DTBO_CFG := $(DEVICE_PATH)/kernel/a51.cfg
+BOARD_KERNEL_CMDLINE := androidboot.selinux=permissive
+BOARD_KERNEL_BASE := 0x10000000
+BOARD_KERNEL_PAGESIZE := 2048
+BOARD_KERNEL_OFFSET      := 0x00008000
+BOARD_KERNEL_TAGS_OFFSET := 0x00000100
+BOARD_RAMDISK_OFFSET     := 0x01000000
+BOARD_NAME               := SRPRL05B001RU
+BOARD_HEADER_VERSION     := 1
+BOARD_MKBOOTIMG_ARGS     := --kernel_offset $(BOARD_KERNEL_OFFSET) --ramdisk_offset $(BOARD_RAMDISK_OFFSET) --tags_offset $(BOARD_KERNEL_TAGS_OFFSET) --header_version $(BOARD_HEADER_VERSION) --board $(BOARD_NAME)
+BOARD_KERNEL_IMAGE_NAME := Image
+TARGET_KERNEL_ARCH := arm64
+TARGET_KERNEL_HEADER_ARCH := arm64
+TARGET_KERNEL_SOURCE := kernel/samsung/a50dd
+TARGET_KERNEL_CONFIG := exynos9610-a50_defconfig
+BOARD_KERNEL_SEPARATED_DTBO := true
+TARGET_KERNEL_CLANG_COMPILE := true
+
+# Platform
+TARGET_BOARD_PLATFORM := exynos5
+TARGET_BOARD_PLATFORM_GPU := mali-g72
+
+# Keymaster
+TARGET_KEYMASTER_VARIANT := samsung
 
 # Partitions
-BOARD_BOOTIMAGE_PARTITION_SIZE     := 61865984
-BOARD_RECOVERYIMAGE_PARTITION_SIZE := 71106560
-BOARD_CACHEIMAGE_PARTITION_SIZE    := 209715200
-BOARD_DTBOIMG_PARTITION_SIZE       := 8388608
-ifneq ($(WITH_GMS),true)
-BOARD_PRODUCTIMAGE_PARTITION_RESERVED_SIZE := 1887436800
-BOARD_SYSTEMIMAGE_PARTITION_RESERVED_SIZE := 1887436800
-endif
-BOARD_PRODUCTIMAGE_FILE_SYSTEM_TYPE := ext4
+TARGET_USERIMAGES_USE_EXT4 := true
+TARGET_USERIMAGES_USE_F2FS := true
 
-BOARD_SUPER_PARTITION_SIZE := 6836715520
-BOARD_SUPER_PARTITION_GROUPS := samsung_dynamic_partitions
-BOARD_SAMSUNG_DYNAMIC_PARTITIONS_PARTITION_LIST := system product
-BOARD_SAMSUNG_DYNAMIC_PARTITIONS_SIZE := 6826715520
+BOARD_BUILD_SYSTEM_ROOT_IMAGE := true
 
-TARGET_COPY_OUT_ODM := odm
-TARGET_COPY_OUT_PRODUCT := product
+TARGET_COPY_OUT_VENDOR := vendor
+
+TARGET_USES_MKE2FS := true
+
+# Boot animation
+TARGET_SCREEN_HEIGHT := 2340
+TARGET_SCREEN_WIDTH := 1080
 
 # Recovery
-TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/rootdir/fstab.exynos9611
+BOARD_HAS_DOWNLOAD_MODE := true
+TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/rootdir/etc/fstab.exynos9610
+BOARD_HAS_LARGE_FILESYSTEM := true
+TARGET_RECOVERY_PIXEL_FORMAT := "ABGR_8888"
 
-# Releasetools
-TARGET_RELEASETOOLS_EXTENSIONS := $(DEVICE_PATH)/releasetools
+# Import system.prop
+TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
+
+# Security patch level
+VENDOR_SECURITY_PATCH := 2019-12-01
+
+# Bluetooth
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(DEVICE_PATH)/bluetooth/include
+
+# HIDL
+DEVICE_MANIFEST_FILE := $(DEVICE_PATH)/manifest.xml
+DEVICE_MATRIX_FILE := $(DEVICE_PATH)/compatibility_matrix.xml
 
 # SELinux
-BOARD_PLAT_PRIVATE_SEPOLICY_DIR += $(DEVICE_PATH)/sepolicy/private
+BOARD_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
 
-# Inherit common board flags
-include device/samsung/universal9610-common/BoardConfigCommon.mk
+-include vendor/samsung/a50dd/BoardConfigVendor.mk
